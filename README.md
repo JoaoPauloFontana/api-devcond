@@ -53,12 +53,6 @@ In order to ensure that the Laravel community is welcoming to all, please review
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-## About CMS - Content Management System
-
-Educational purposes. I'm making a note system for each registered user. Each one will have their own notes, without being able to edit, or create the others.
-
-In the project, for the dashboard, I am using the adminLte (composer library).
-
 ## Installation
 
 Please check the official laravel installation guide for server requirements before you start. [Official Documentation](https://laravel.com/docs/5.4/installation#installation)
