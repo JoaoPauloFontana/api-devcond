@@ -67,19 +67,15 @@ Alternative installation is possible without local dependencies relying on [Dock
 
 Clone the repository
 
-    git clone git@github.com:Shaiqna/notes.git
+    git clone git@github.com:Shaiqna/api-devcond.git
 
 Switch to the repo folder
 
-    cd notes
+    cd api-devcond
 
 Install all the dependencies using composer
 
     composer install
-
-Install all the dependencies using npm
-
-    npm install
 
 Copy the example env file and make the required configuration changes in the .env file
 
@@ -98,9 +94,3 @@ Start the local development server
     php artisan serve
 
 You can now access the server at http://localhost:8000
-
-## Database
-
-To create the tables inside the database, run:
-
-    php artisan migrate
