@@ -79,6 +79,10 @@ Generate a new application key
 
     php artisan key:generate
 
+Generate JWT key
+
+    php artisan jwt:secret
+
 Run the database migrations (**Set the database connection in .env before migrating**)
 
     php artisan migrate
