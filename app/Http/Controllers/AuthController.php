@@ -12,13 +12,15 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function unauthorized(){
+    public function unauthorized()
+    {
         return response()->json([
             'error' => 'Não autorizado!'
         ], 401);
     }
 
-    public function register(RegisterRequest $req){
+    public function register(RegisterRequest $req)
+    {
         $array = ['error' => ''];
 
         $users = $req->all();
@@ -63,7 +65,8 @@ class AuthController extends Controller
         return $array;
     }
 
-    public function login(Request $req){
+    public function login(Request $req)
+    {
         $array = ['error' => ''];
 
         $validator = Validator::make($req->all(), [
@@ -106,6 +109,31 @@ class AuthController extends Controller
 
             return $array;
         }
+
+        return $array;
+    }
+
+    public function validateToken()
+    {
+        $array = ['error' => ''];
+
+        $userLogged = auth()->user();
+        $array['user'] = $userLogged;
+
+        $properties = Unit::select(['id', 'name'])
+        ->where('id_owner', $userLogged['id'])
+        ->get();
+
+        $array['user']['properties'] = $properties;
+
+        return $array;
+    }
+
+    public function logout()
+    {
+        $array = ['error' => ''];
+
+        auth()->logout();
 
         return $array;
     }
