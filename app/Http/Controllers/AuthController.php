@@ -43,11 +43,11 @@ class AuthController extends Controller
 
             $array['token'] = $token;
 
-            $user = auth()->user();
-            $array['user'] = $user;
+            $userLogged = auth()->user();
+            $array['user'] = $userLogged;
 
             $properties = Unit::select(['id', 'name'])
-            ->where('id_owner', $user['id'])
+            ->where('id_owner', $userLogged['id'])
             ->get();
 
             $array['user']['properties'] = $properties;
