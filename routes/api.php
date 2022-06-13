@@ -30,7 +30,7 @@ Route::middleware('auth:api')->group(function(){
     Route::get('/walls', [WallController::class, 'getAll'])->name('mural.getAll');
     Route::post('/wall/{id}/like', [WallController::class, 'like'])->name('mural.like');
 
-    Route::get('/docs', [DocController::class, 'gelAll'])->name('docs.getAll');
+    Route::get('/docs', [DocController::class, 'getAll'])->name('docs.getAll');
 
     Route::get('/warnings', [WarningController::class, 'getMyWarnings'])->name('warn.getMyWarnings');
     Route::post('/warning', [WarningController::class, 'setWarning'])->name('warn.setWarning');
