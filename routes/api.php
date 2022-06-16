@@ -33,8 +33,8 @@ Route::middleware('auth:api')->group(function(){
     Route::get('/docs', [DocController::class, 'getAll'])->name('docs.getAll');
 
     Route::get('/warnings', [WarningController::class, 'getMyWarnings'])->name('warn.getMyWarnings');
-    Route::post('/warning', [WarningController::class, 'setWarning'])->name('warn.setWarning');
     Route::post('/warning/file', [WarningController::class, 'addWarningFile'])->name('warn.file');
+    Route::post('/warning', [WarningController::class, 'setWarning'])->name('warn.setWarning');
 
     Route::get('/billets', [BilletController::class, 'getAll'])->name('billet.getAll');
 
