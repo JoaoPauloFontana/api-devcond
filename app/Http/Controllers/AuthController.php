@@ -19,7 +19,7 @@ class AuthController extends Controller
         ], 401);
     }
 
-    public function register(RegisterRequest $req)
+    public function register(Request $req)
     {
         $array = ['error' => ''];
 
