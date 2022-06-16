@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FileWarningRequest;
 use App\Http\Requests\WarningRequest;
 use App\Models\Unit;
 use App\Models\Warning;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class WarningController extends Controller
 {
-    public function getMyWarnings(WarningRequest $req)
+    public function getMyWarnings(Request $req)
     {
         $array = ['error' => ''];
 
@@ -51,6 +53,23 @@ class WarningController extends Controller
             }
         }else{
             $array['error'] = 'A propriedade é necessária!';
+        }
+
+        return $array;
+    }
+
+    public function addWarningFile(Request $req)
+    {
+        $array = ['error' => ''];
+
+        $warning = $req->all();
+
+        if($warning){
+            $file = $req->file('photo')->store('public');
+
+            $array['photo'] = asset(Storage::url($file));
+        }else{
+            $array['error'] = 'A foto é necessária!';
         }
 
         return $array;
