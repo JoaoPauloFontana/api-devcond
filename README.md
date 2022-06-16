@@ -61,7 +61,7 @@ Alternative installation is possible without local dependencies relying on [Dock
 
 Clone the repository
 
-    git clone git@github.com:Shaiqna/api-devcond.git
+    git clone https://github.com/Shaiqna/api-devcond.git
 
 Switch to the repo folder
 
