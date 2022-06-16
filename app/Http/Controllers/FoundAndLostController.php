@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\FoundAndLost;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class FoundAndLostController extends Controller
 {
@@ -33,6 +35,37 @@ class FoundAndLostController extends Controller
 
         $array['recovered'] = $recovered;
         $array['lost'] = $lost;
+
+        return $array;
+    }
+
+    public function insert(Request $req)
+    {
+        $array = ['error' => ''];
+
+        $validator = Validator::make($req->all(), [
+            'description' => 'required',
+            'where' => 'required',
+            'photo' => 'required|image|mimes:jpeg,png,jpg',
+        ]);
+
+        if(!$validator->fails()){
+            $file = $req->file('photo')->store('public');
+            $file = explode('public/', $file);
+            $file = $file[1];
+
+            $newLost = FoundAndLost::create([
+                'description' => $req['description'],
+                'where' => $req['where'],
+                'photo' => $file,
+                'status' => 'LOST',
+                'datecreated' => date('Y-m-d H:i:s'),
+            ]);
+        }else{
+            $array['error'] = $validator->errors()->first();
+
+            return $array;
+        }
 
         return $array;
     }
