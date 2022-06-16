@@ -54,7 +54,7 @@ class FoundAndLostController extends Controller
             $file = explode('public/', $file);
             $file = $file[1];
 
-            $newLost = FoundAndLost::create([
+            FoundAndLost::create([
                 'description' => $req['description'],
                 'where' => $req['where'],
                 'photo' => $file,
@@ -63,6 +63,32 @@ class FoundAndLostController extends Controller
             ]);
         }else{
             $array['error'] = $validator->errors()->first();
+
+            return $array;
+        }
+
+        return $array;
+    }
+
+    public function update($id, Request $req)
+    {
+        $array = ['error' => ''];
+
+        $status = $req['status'];
+
+        if($status && in_array($status, ['lost', 'recovered'])){
+            $item = FoundAndLost::find($id);
+
+            if($item){
+                $item->status = strtoupper($status);
+                $item->save();
+            }else{
+                $array['error'] = 'Item não encontrado!';
+
+                return $array;
+            }
+        }else{
+            $array['error'] = 'Status inválido';
 
             return $array;
         }
