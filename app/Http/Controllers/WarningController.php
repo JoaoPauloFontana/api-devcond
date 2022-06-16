@@ -8,6 +8,7 @@ use App\Models\Unit;
 use App\Models\Warning;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class WarningController extends Controller
 {
@@ -69,7 +70,49 @@ class WarningController extends Controller
 
             $array['photo'] = asset(Storage::url($file));
         }else{
-            $array['error'] = 'A foto é necessária!';
+            $array['error'] = 'Adicione uma foto!';
+        }
+
+        return $array;
+    }
+
+    public function setWarning(Request $req)
+    {
+        $array = ['error' => ''];
+
+        $validator = Validator::make($req->all(), [
+            'title' => 'required',
+            'id_unit' => 'required',
+        ]);
+
+        if(!$validator->fails()){
+            $list = $req['list'];
+
+            $newWarn = new Warning();
+            $newWarn->id_unit = $req['id_unit'];
+            $newWarn->title = $req['title'];
+            $newWarn->status = 'IN_REVIEW';
+            $newWarn->datecreated = date('Y-m-d');
+
+            if($list && is_array($list)){
+                $photos = [];
+
+                foreach($list as $listItem){
+                    $url = explode('/', $listItem);
+
+                    $photos[] = end($url);
+                }
+
+                $newWarn->photos = implode(',', $photos);
+            }else{
+                $newWarn->photos = '';
+            }
+
+            $newWarn->save();
+        }else{
+            $array['error'] = $validator->errors()->first();
+
+            return $array;
         }
 
         return $array;
