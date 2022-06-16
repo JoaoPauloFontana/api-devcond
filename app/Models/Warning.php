@@ -10,4 +10,12 @@ class Warning extends Model
     use HasFactory;
 
     public $timestamps = false;
+
+    protected $fillable = [
+        'id_unit',
+        'title',
+        'status',
+        'datecreated',
+        'photos'
+    ];
 }
