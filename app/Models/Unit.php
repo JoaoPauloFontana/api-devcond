@@ -10,4 +10,9 @@ class Unit extends Model
     use HasFactory;
 
     public $timestamps = false;
+
+    public $fillable = [
+        'name',
+        'id_owner'
+    ];
 }

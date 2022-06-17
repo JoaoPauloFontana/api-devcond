@@ -11,4 +11,12 @@ class FoundAndLost extends Model
 
     public $timestamps = false;
     public $table = 'foundandlosts';
+
+    public $fillable = [
+        'description',
+        'where',
+        'photo',
+        'status',
+        'datecreated',
+    ];
 }
