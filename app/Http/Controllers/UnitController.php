@@ -7,6 +7,7 @@ use App\Models\UnitPeople;
 use App\Models\UnitPet;
 use App\Models\UnitVehicle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UnitController extends Controller
 {
@@ -31,6 +32,77 @@ class UnitController extends Controller
         }else{
             $array['error'] = 'Propriedade inexistente!';
 
+            return $array;
+        }
+
+        return $array;
+    }
+
+    public function addPerson($id, Request $req)
+    {
+        $array = ['error' => ''];
+
+        $validator = Validator::make($req->all(), [
+            'name' => 'required',
+            'birthdate' => 'required|date'
+        ]);
+
+        if(!$validator->fails()){
+            UnitPeople::create([
+                'id_unit' => $id,
+                'name' => $req['name'],
+                'birthdate' => $req['birthdate']
+            ]);
+        }else{
+            $array['error'] = $validator->errors()->first();
+            return $array;
+        }
+
+        return $array;
+    }
+
+    public function addVehicle($id, Request $req)
+    {
+        $array = ['error' => ''];
+
+        $validator = Validator::make($req->all(), [
+            'title' => 'required',
+            'color' => 'required',
+            'plate' => 'required',
+        ]);
+
+        if(!$validator->fails()){
+            UnitVehicle::create([
+                'id_unit' => $id,
+                'title' => $req['title'],
+                'color' => $req['color'],
+                'plate' => $req['plate'],
+            ]);
+        }else{
+            $array['error'] = $validator->errors()->first();
+            return $array;
+        }
+
+        return $array;
+    }
+
+    public function addPet($id, Request $req)
+    {
+        $array = ['error' => ''];
+
+        $validator = Validator::make($req->all(), [
+            'name' => 'required',
+            'race' => 'required'
+        ]);
+
+        if(!$validator->fails()){
+            UnitPet::create([
+                'id_unit' => $id,
+                'name' => $req['name'],
+                'race' => $req['race']
+            ]);
+        }else{
+            $array['error'] = $validator->errors()->first();
             return $array;
         }
 
