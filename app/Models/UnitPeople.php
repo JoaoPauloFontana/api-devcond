@@ -9,8 +9,10 @@ class UnitPeople extends Model
 {
     use HasFactory;
 
-    protected $hidden = [
-        'id_unit'
+    protected $fillable = [
+        'id_unit',
+        'name',
+        'birthdate'
     ];
 
     public $timestamps = false;

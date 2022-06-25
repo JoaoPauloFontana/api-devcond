@@ -9,9 +9,12 @@ class UnitPet extends Model
 {
     use HasFactory;
 
-    protected $hidden = [
-        'id_unit'
+    protected $fillable = [
+        'id_unit',
+        'name',
+        'race',
     ];
+
 
     public $timestamps = false;
     public $table = 'unitpets';

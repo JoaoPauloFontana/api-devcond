@@ -9,8 +9,11 @@ class UnitVehicle extends Model
 {
     use HasFactory;
 
-    protected $hidden = [
-        'id_unit'
+    protected $fillable = [
+        'id_unit',
+        'title',
+        'color',
+        'plate'
     ];
 
     public $timestamps = false;
