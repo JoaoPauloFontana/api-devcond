@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
+use App\Models\AreaDisabledDay;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
@@ -64,6 +65,49 @@ class ReservationController extends Controller
                 'dates' => $dates
             ];
 
+        }
+
+        return $array;
+    }
+
+    public function getDisabledDates($id)
+    {
+        $area = Area::findOrFail($id);
+
+        $array = ['error' => '', 'list' => []];
+
+        $disabledDays = AreaDisabledDay::where('id_area', $id)->get();
+
+        foreach ($disabledDays as $disabledDay) {
+            $array['list'][] = $disabledDay['day'];
+        }
+
+        $allowedDays = explode(',', $area['days']);
+        $offDays = [];
+
+        for ($i = 0; $i < 7; $i++) {
+            if (!in_array($i, $allowedDays)) {
+                $offDays[] = $i;
+            }
+        }
+
+        $startDay = time();
+        $endDay = strtotime('+3 months');
+        $currentDay = $startDay;
+        $keep = true;
+
+        while ($keep) {
+            if ($currentDay < $endDay) {
+                $weekDay = date('w', $currentDay);
+
+                if (in_array($weekDay, $offDays)) {
+                    $array['list'][] = date('Y-m-d', $currentDay);
+                }
+
+                $currentDay = strtotime('+1 day', $currentDay);
+            } else {
+                $keep = false;
+            }
         }
 
         return $array;
